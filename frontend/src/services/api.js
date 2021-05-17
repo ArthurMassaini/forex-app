@@ -20,9 +20,10 @@ export async function fetchLogin(email, password) {
     const { token } = responseJson;
 
     if (token) {
-      return STORAGE.setUser(responseJson);
+      STORAGE.setUser(responseJson);
+      return { token };
     }
-    return responseJson.message;
+    return responseJson;
   } catch (error) {
     return error.message;
   }
