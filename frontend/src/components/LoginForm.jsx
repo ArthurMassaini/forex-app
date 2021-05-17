@@ -1,14 +1,32 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-
 import { Button, Form } from 'semantic-ui-react';
+
+// import * as API from '../services/api';
 
 function LoginForm() {
   const [formValues, setFormValues] = useState({ email: '', password: '' });
+  // const history = useHistory();
 
   const handleChange = ({ target }) => {
     const { name, value } = target;
     setFormValues({ ...formValues, [name]: value });
+  };
+
+  const handleSubmit = async (event) => {
+    // event.preventDefault();
+    // const { name, email, password } = formValues;
+
+    // const registerResponse = await API.fetchRegister(name, email, password);
+    // // setMessage(registerResponse.message);
+
+    // // if user exists, redirect to login after two seconds
+    // if (registerResponse.user) {
+    //   const twoSeconds = 2000;
+    //   setTimeout(() => {
+    //     history.push('/');
+    //   }, twoSeconds);
+    // }
   };
 
   const validateEmailAndPassword = () => {
@@ -35,7 +53,7 @@ function LoginForm() {
   };
 
   return (
-    <Form size="large">
+    <Form size="large" onSubmit={handleSubmit}>
       <Form.Input
         icon="user"
         iconPosition="left"
