@@ -25,12 +25,15 @@ function RegisterForm() {
     const { name, email, password } = formValues;
 
     const registerResponse = await API.fetchRegister(name, email, password);
-    setMessage(registerResponse);
+    setMessage(registerResponse.message);
 
-    const twoSeconds = 2000;
-    setTimeout(() => {
-      history.push('/login');
-    }, twoSeconds);
+    // if user exists, redirect to login after two seconds
+    if (registerResponse.user) {
+      const twoSeconds = 2000;
+      setTimeout(() => {
+        history.push('/login');
+      }, twoSeconds);
+    }
   };
 
   const validateInputs = () => {
@@ -86,9 +89,7 @@ function RegisterForm() {
       />
       {renderButton()}
       <br />
-      {message !== '' && (
-        <CustomMessage type="positive">{message}</CustomMessage>
-      )}
+      {message !== '' && <CustomMessage>{message}</CustomMessage>}
       <br />
       <Link to="/login" className="link">
         Already have an account? Log in

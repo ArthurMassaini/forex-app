@@ -1,5 +1,6 @@
 export async function fetchToken() {
-//   const requestTokenUrl = 'http://localhost:3001/login';
+//   const endpoint = 'http://localhost:3001/login';
+
 //   const request = {
 //     method: 'POST',
 //     headers: {
@@ -10,8 +11,9 @@ export async function fetchToken() {
 //       password,
 //     }),
 //   };
+
 //   try {
-//     const response = await fetch(requestTokenUrl, request);
+//     const response = await fetch(endpoint, request);
 //     const responseJson = await response.json();
 //     const { name, token, role, id } = responseJson;
 //     const user = {
@@ -50,7 +52,7 @@ export async function fetchRegister(name, email, password) {
     const response = await fetch(endpoint, request);
     const responseJson = await response.json();
 
-    return responseJson.message;
+    return responseJson;
   } catch (error) {
     return error.message;
   }
