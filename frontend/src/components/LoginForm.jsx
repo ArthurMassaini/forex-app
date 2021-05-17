@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { Button, Form } from 'semantic-ui-react';
 
-// import * as API from '../services/api';
+import CustomMessage from './CustomMessage';
+import * as API from '../services/api';
 
 function LoginForm() {
   const [formValues, setFormValues] = useState({ email: '', password: '' });
-  // const history = useHistory();
+  const [message, setMessage] = useState('');
+  const history = useHistory();
 
   const handleChange = ({ target }) => {
     const { name, value } = target;
@@ -14,19 +16,17 @@ function LoginForm() {
   };
 
   const handleSubmit = async (event) => {
-    // event.preventDefault();
-    // const { name, email, password } = formValues;
+    event.preventDefault();
+    const { email, password } = formValues;
 
-    // const registerResponse = await API.fetchRegister(name, email, password);
-    // // setMessage(registerResponse.message);
+    const loginResponse = await API.fetchLogin(email, password);
 
-    // // if user exists, redirect to login after two seconds
-    // if (registerResponse.user) {
-    //   const twoSeconds = 2000;
-    //   setTimeout(() => {
-    //     history.push('/');
-    //   }, twoSeconds);
-    // }
+    // if user exists, redirect to home/dashboard
+    if (loginResponse.token) {
+      history.push('/');
+    } else {
+      setMessage(loginResponse.message);
+    }
   };
 
   const validateEmailAndPassword = () => {
@@ -74,6 +74,7 @@ function LoginForm() {
       />
       {renderButton()}
       <br />
+      {message !== '' && <CustomMessage>{message}</CustomMessage>}
       <br />
       <Link to="/register" className="link">
         New? Create an account

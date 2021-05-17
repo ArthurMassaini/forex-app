@@ -1,36 +1,31 @@
-export async function fetchToken() {
-//   const endpoint = 'http://localhost:3001/login';
+import * as STORAGE from './localStorage';
 
-//   const request = {
-//     method: 'POST',
-//     headers: {
-//       'Content-Type': 'application/json',
-//     },
-//     body: JSON.stringify({
-//       email,
-//       password,
-//     }),
-//   };
+export async function fetchLogin(email, password) {
+  const endpoint = 'http://localhost:3001/login';
 
-//   try {
-//     const response = await fetch(endpoint, request);
-//     const responseJson = await response.json();
-//     const { name, token, role, id } = responseJson;
-//     const user = {
-//       name,
-//       email,
-//       token,
-//       role,
-//       id,
-//     };
-//     if (token) {
-//       setUser(user);
-//       return token;
-//     }
-//     return responseJson.message;
-//   } catch (error) {
-//     return error.message;
-//   }
+  const request = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      email,
+      password,
+    }),
+  };
+
+  try {
+    const response = await fetch(endpoint, request);
+    const responseJson = await response.json();
+    const { token } = responseJson;
+
+    if (token) {
+      return STORAGE.setUser(responseJson);
+    }
+    return responseJson.message;
+  } catch (error) {
+    return error.message;
+  }
 }
 
 export async function fetchRegister(name, email, password) {
