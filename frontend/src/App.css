@@ -1,3 +1,18 @@
-.App {
+.main-login {
+  height: 100vh;
   text-align: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
+
+.link{
+  color: gray;
+}
+
+.link:hover{
+  color: gray;
+  text-decoration: underline;
+  text-decoration-color: gray;
+}
+
