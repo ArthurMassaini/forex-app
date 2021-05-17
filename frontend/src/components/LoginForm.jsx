@@ -1,43 +1,65 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import { Button, Form } from 'semantic-ui-react';
 
 function LoginForm() {
+  const [formValues, setFormValues] = useState({ email: '', password: '' });
+
+  const handleChange = ({ target }) => {
+    const { name, value } = target;
+    setFormValues({ ...formValues, [name]: value });
+  };
+
+  const validateEmailAndPassword = () => {
+    const { email, password } = formValues;
+
+    const regexEmail = new RegExp('.+@[A-z]+[.](com|io)');
+    const regexPassword = new RegExp('.{6}');
+
+    if (regexEmail.test(email) && regexPassword.test(password)) {
+      return true;
+    }
+    return false;
+  };
+
+  const renderButton = () => {
+    if (validateEmailAndPassword()) {
+      return <Button color="green">LOGIN</Button>;
+    }
+    return (
+      <Button color="green" disabled>
+        LOGIN
+      </Button>
+    );
+  };
+
   return (
     <Form size="large">
       <Form.Input
         icon="user"
         iconPosition="left"
+        type="text"
         placeholder="Email"
         name="email"
-        //   value={email}
-        //   onChange={(e) => onInputChange(e)}
+        value={formValues.email}
+        onChange={handleChange}
       />
-
       <Form.Input
         icon="lock"
         iconPosition="left"
-        placeholder="Password"
         type="password"
+        placeholder="Password"
         name="password"
-        //   value={password}
-        //   onChange={(e) => onInputChange(e)}
+        value={formValues.password}
+        onChange={handleChange}
       />
-
-      <Button
-        color="green"
-        //   onClick={() => onHandleSubmit()}
-        //   disabled={validateInputs()}
-      >
-        LOGIN
-      </Button>
-
-      <Button
-        color="gray"
-        //   onClick={() => history.push('/register')}
-      >
-        I do not have an account yet
-      </Button>
+      {renderButton()}
+      <br />
+      <br />
+      <Link to="/register" className="link">
+        New? Create an account
+      </Link>
     </Form>
   );
 }
