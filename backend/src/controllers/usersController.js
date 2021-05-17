@@ -14,7 +14,7 @@ const createUser = async (req, res) => {
   } else if (result === 'Already have an user with that email.') {
     res.status(STATUS_CONFLICT).json({ message: result });
   } else {
-    res.status(STATUS_CREATED).json({ user: result });
+    res.status(STATUS_CREATED).json({ user: result, message: 'Registration successfully completed' });
   }
 };
 
