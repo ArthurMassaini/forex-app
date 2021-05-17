@@ -4,32 +4,41 @@ import { Link } from 'react-router-dom';
 import { Button, Form } from 'semantic-ui-react';
 
 function RegisterForm() {
-  const [formValues, setFormValues] = useState({ email: '', password: '' });
+  const [formValues, setFormValues] = useState({
+    name: '',
+    email: '',
+    password: '',
+  });
 
   const handleChange = ({ target }) => {
     const { name, value } = target;
     setFormValues({ ...formValues, [name]: value });
   };
 
-  const validateEmailAndPassword = () => {
-    const { email, password } = formValues;
+  const validateInputs = () => {
+    const { name, email, password } = formValues;
 
     const regexEmail = new RegExp('.+@[A-z]+[.](com|io)');
     const regexPassword = new RegExp('.{6}');
+    const regexName = /^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]{12,}$/;
 
-    if (regexEmail.test(email) && regexPassword.test(password)) {
+    if (
+      regexEmail.test(email)
+      && regexPassword.test(password)
+      && regexName.test(name)
+    ) {
       return true;
     }
     return false;
   };
 
   const renderButton = () => {
-    if (validateEmailAndPassword()) {
-      return <Button color="green">LOGIN</Button>;
+    if (validateInputs()) {
+      return <Button color="blue">REGISTER NOW</Button>;
     }
     return (
-      <Button color="green" disabled>
-        LOGIN
+      <Button color="blue" disabled>
+        REGISTER NOW
       </Button>
     );
   };
@@ -37,8 +46,13 @@ function RegisterForm() {
   return (
     <Form size="large">
       <Form.Input
-        icon="user"
-        iconPosition="left"
+        type="text"
+        placeholder="Full Name"
+        name="name"
+        value={formValues.name}
+        onChange={handleChange}
+      />
+      <Form.Input
         type="text"
         placeholder="Email"
         name="email"
@@ -46,8 +60,6 @@ function RegisterForm() {
         onChange={handleChange}
       />
       <Form.Input
-        icon="lock"
-        iconPosition="left"
         type="password"
         placeholder="Password"
         name="password"
@@ -57,8 +69,8 @@ function RegisterForm() {
       {renderButton()}
       <br />
       <br />
-      <Link to="/register" className="link">
-        New? Create an account
+      <Link to="/login" className="link">
+        Already have an account? Log in
       </Link>
     </Form>
   );
