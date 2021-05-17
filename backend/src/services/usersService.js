@@ -29,7 +29,7 @@ const verifyEmail = (email, allUsers) => {
   }
 };
 
-// -----------------------------------------
+// ----------------------------------------- Services functions
 
 const createUser = async (name, email, password) => {
   const allUsers = await usersModel.getAllUsers();

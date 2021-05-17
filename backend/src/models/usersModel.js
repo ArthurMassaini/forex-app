@@ -2,7 +2,7 @@ const connection = require('../config/connection');
 
 const getUserByEmail = async (email) => {
   const user = await connection().then((db) =>
-    db.collection('users').findOne({ email }, { name: 0, password: 0 }),
+    db.collection('users').findOne({ email }),
   );
   return user;
 };
