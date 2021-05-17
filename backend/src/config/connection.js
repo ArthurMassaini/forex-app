@@ -1,16 +1,17 @@
 const { MongoClient } = require('mongodb');
+require('dotenv').config();
 
 const OPTIONS = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 };
 
-const MONGO_DB_URL = 'mongodb://localhost:27017/Forex';
-const DB_NAME = 'Forex';
+const { MONGO_DB_URL, DB_NAME } = process.env;
 
 let db = null;
 
-const connection = () => (db
+const connection = () =>
+  db
     ? Promise.resolve(db)
     : MongoClient.connect(MONGO_DB_URL, OPTIONS)
         .then((conn) => {
@@ -20,6 +21,6 @@ const connection = () => (db
         .catch((err) => {
           console.error(err);
           process.exit(1);
-        }));
+        });
 
 module.exports = connection;
