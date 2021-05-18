@@ -1,3 +1,5 @@
+const bcrypt = require('bcryptjs');
+
 const usersModel = require('../models/usersModel');
 
 // ----------------------------------------- Validate functions
@@ -39,7 +41,10 @@ const createUser = async (name, email, password) => {
     verifyEmail(email, allUsers);
     verifyPassword(password);
 
-    const newUser = await usersModel.createUser(name, email, password);
+    const salt = bcrypt.genSaltSync(10);
+		const encryptedPassword = bcrypt.hashSync(password, salt);
+
+    const newUser = await usersModel.createUser(name, email, encryptedPassword);
     return newUser;
   } catch (error) {
     return error.message;
