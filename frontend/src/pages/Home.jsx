@@ -13,16 +13,6 @@ function Home() {
   const fluctuation = useSelector((state) => state.fluctuation.data);
 
   useEffect(() => {
-    // fetch(
-    //   'https://api.twelvedata.com/time_series?symbol=GBP/USD&interval=1min&outputsize=1&apikey=8a6f8212cc974c7d91a70aec45d7cc22',
-    // )
-    //   .then((data) => data.json())
-    //   .then((resp) => console.log(resp));
-    // socketClient.on('apiValues', (data) => {
-    //   console.log(data);
-    //   setResponse(data.values);
-    // });
-    // socket.close();
     dispatch(ACTIONS.retrieveData());
   }, []);
 
@@ -33,8 +23,15 @@ function Home() {
   return (
     <main className="main-home">
       <NavBar item="DashBoard" />
-      <h1>GBP/USD</h1>
+
+      <h3 className="no-margin">
+        50000,00
+      </h3>
+      <p>Available to trade</p>
+
+      <h2 className="no-margin">GBP/USD</h2>
       <p>(fluctuation updates every 1 minute)</p>
+
       <section className="section">
         {fluctuation
           && fluctuation.map((values) => (

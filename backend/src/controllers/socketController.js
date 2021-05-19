@@ -58,59 +58,53 @@ const allValues = [
   },
 ];
 
-// const socketConnection = (socket) => {
+const socketConnection = (socket) => {
+  console.log(`Usuário conectado! ${socket.id}`);
+  let i = 1;
+
+  socket.emit('apiValues', allValues[0]);
+
+  setInterval(() => {
+    socket.emit('apiValues', allValues[i]);
+
+    if (i === 0) {
+      i++;
+    } else if (i === 1){
+      i++;
+    } else {
+      i = 0;
+    }
+  }, 5000);
+
+  socket.on('disconnect', () => {
+    console.log('Usuário desconectado');
+  });
+};
+
+// const cron = require('node-cron');
+// const fetch = require('node-fetch');
+
+// const doTheFetch = () => {
+//   return fetch(
+//     'https://api.twelvedata.com/time_series?symbol=GBP/USD&interval=1min&outputsize=1&apikey=8a6f8212cc974c7d91a70aec45d7cc22',
+//   ).then((data) => data.json());
+// };
+
+// const socketConnection = async (socket) => {
 //   console.log(`Usuário conectado! ${socket.id}`);
-//   let i = 1;
+//   const initialValue = await doTheFetch();
 
-//   socket.emit('apiValues', allValues[0]);
+//   socket.emit('apiValues', initialValue);
 
-//   setInterval(() => {
-//     socket.emit('apiValues', allValues[i]);
+//   cron.schedule('* * * * *', async () => {
+//     const nextValue = await doTheFetch();
 
-//     if (i === 0) {
-//       i++;
-//     } else if (i === 1){
-//       i++;
-//     } else {
-//       i = 0;
-//     }
-//   }, 5000);
+//     socket.emit('apiValues', nextValue);
+//   });
 
 //   socket.on('disconnect', () => {
 //     //   socket.close();
 //   });
 // };
-
-const cron = require('node-cron');
-const fetch = require('node-fetch');
-
-const doTheFetch = () => {
-  return fetch(
-    'https://api.twelvedata.com/time_series?symbol=GBP/USD&interval=1min&outputsize=1&apikey=8a6f8212cc974c7d91a70aec45d7cc22',
-  ).then((data) => data.json());
-};
-
-const socketConnection = async (socket) => {
-  console.log(`Usuário conectado! ${socket.id}`);
-  const initialValue = await doTheFetch();
-
-  socket.emit('apiValues', initialValue);
-
-  // setInterval(async () => {
-  //   const nextValue = await doTheFetch();
-
-  //   socket.emit('apiValues', nextValue);
-  // }, 60000);
-
-  cron.schedule('* * * * *', async () => {
-   const nextValue = await doTheFetch();
-
-    socket.emit('apiValues', nextValue);
-  });
-
-  socket.on('disconnect', () => {
-    //   socket.close();
-  });
-};
 
 module.exports = { socketConnection };

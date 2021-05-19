@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Card, Button } from 'semantic-ui-react';
+import { Card, Button, Input } from 'semantic-ui-react';
 
 function Fluctuations({ values }) {
   const [valuesSell, setValuesSell] = useState('');
   const [valuesBuy, setValuesBuy] = useState('');
   const [compareSell, setCompareSell] = useState('');
   const [compareBuy, setCompareBuy] = useState('');
+  const [colorGreen, setColorGreen] = useState();
+  const [colorRed, setColorRed] = useState();
+  const [color, setColor] = useState();
 
   useEffect(() => {
     setCompareSell(valuesSell);
@@ -57,31 +60,49 @@ function Fluctuations({ values }) {
     );
   };
 
+  const handleClick = ({ target }) => {
+    const { name } = target;
+    setColor(name);
+    if (name === 'red') {
+      setColorRed(name);
+      setColorGreen();
+    } else {
+      setColorGreen(name);
+      setColorRed();
+    }
+  };
+
   return (
     <div>
+      <h3>
+        {`Spread: ${
+          (Number(values.high) - Number(values.low)).toFixed(5) * 100000
+        }`}
+      </h3>
       <Card.Group>
         <Card>
-          <Card.Content>
-            {verifyGreaterSell(values.low)}
-          </Card.Content>
+          <Card.Content>{verifyGreaterSell(values.low)}</Card.Content>
           <Card.Content extra>
-            <Button basic color="red">
+            <Button color={colorRed} onClick={handleClick} name="red">
               Sell
             </Button>
           </Card.Content>
         </Card>
         <Card>
-          <Card.Content>
-            {verifyGreaterBuy(values.high)}
-          </Card.Content>
+          <Card.Content>{verifyGreaterBuy(values.high)}</Card.Content>
           <Card.Content extra>
-            <Button basic color="green">
+            <Button color={colorGreen} onClick={handleClick} name="green">
               Buy
             </Button>
           </Card.Content>
         </Card>
       </Card.Group>
-      <h3>{`Spread: ${(Number(values.high) - Number(values.low)).toFixed(5) * 100000}`}</h3>
+      <br />
+      <Input placeholder="Quantity" className="input-trade" />
+      <br />
+      <Button color={color} name={color}>
+        Place trade
+      </Button>
     </div>
   );
 }

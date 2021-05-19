@@ -29,6 +29,13 @@
 
 .main-home {
   text-align: center;
+  /* display: flex;
+  flex-direction:column; */
+}
+
+.no-margin{
+  /* align-self: flex-start; */
+  margin-bottom: 0;
 }
 
 .green {
@@ -37,4 +44,8 @@
 
 .red {
   color: red;
+}
+
+.input-trade {
+  margin-bottom: 10px;
 }

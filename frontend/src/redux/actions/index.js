@@ -9,13 +9,7 @@ export const getData = (data) => ({
 export const retrieveData = () => async (dispatch) => {
   //   dispatch({ type: LOADING });
   socketClient.on('apiValues', (data) => {
-    console.log(data);
     dispatch(getData(data));
   });
   //   dispatch({ type: OK });
 };
-
-export const activeToggle = (bool) => ({
-  type: TYPES.SHOW,
-  payload: bool,
-});
