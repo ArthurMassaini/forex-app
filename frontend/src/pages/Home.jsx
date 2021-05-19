@@ -14,7 +14,7 @@ function Home() {
 
   useEffect(() => {
     // fetch(
-    //   'https://api.twelvedata.com/time_series?symbol=EUR/USD&interval=1min&apikey=demo&source=docs',
+    //   'https://api.twelvedata.com/time_series?symbol=GBP/USD&interval=1min&outputsize=1&apikey=8a6f8212cc974c7d91a70aec45d7cc22',
     // )
     //   .then((data) => data.json())
     //   .then((resp) => console.log(resp));
