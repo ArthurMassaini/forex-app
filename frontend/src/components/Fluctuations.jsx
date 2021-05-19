@@ -58,38 +58,31 @@ function Fluctuations({ values }) {
   };
 
   return (
-    <Card.Group>
-      <Card>
-        <Card.Content>
-          {verifyGreaterSell(values.low)}
-
-          {/* <Card.Meta>Friends of Elliot</Card.Meta>
-          <Card.Description>
-            Steve wants to add you to the group
-          </Card.Description> */}
-        </Card.Content>
-        <Card.Content extra>
-          <Button basic color="red">
-            Sell
-          </Button>
-        </Card.Content>
-      </Card>
-      <Card>
-        <Card.Content>
-          {verifyGreaterBuy(values.high)}
-
-          {/* <Card.Meta>Friends of Elliot</Card.Meta>
-          <Card.Description>
-            Steve wants to add you to the group
-          </Card.Description> */}
-        </Card.Content>
-        <Card.Content extra>
-          <Button basic color="green">
-            Buy
-          </Button>
-        </Card.Content>
-      </Card>
-    </Card.Group>
+    <div>
+      <Card.Group>
+        <Card>
+          <Card.Content>
+            {verifyGreaterSell(values.low)}
+          </Card.Content>
+          <Card.Content extra>
+            <Button basic color="red">
+              Sell
+            </Button>
+          </Card.Content>
+        </Card>
+        <Card>
+          <Card.Content>
+            {verifyGreaterBuy(values.high)}
+          </Card.Content>
+          <Card.Content extra>
+            <Button basic color="green">
+              Buy
+            </Button>
+          </Card.Content>
+        </Card>
+      </Card.Group>
+      <h3>{`Spread: ${(Number(values.high) - Number(values.low)).toFixed(5) * 100000}`}</h3>
+    </div>
   );
 }
 
