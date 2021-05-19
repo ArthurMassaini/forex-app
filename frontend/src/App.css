@@ -6,13 +6,35 @@
   justify-content: center;
 }
 
-.link{
+.link {
   color: gray;
 }
 
-.link:hover{
+.link:hover {
   color: gray;
   text-decoration: underline;
   text-decoration-color: gray;
 }
 
+.center {
+  text-align: center;
+}
+
+.section {
+  margin-top: 50px;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+.main-home {
+  text-align: center;
+}
+
+.green {
+  color: green;
+}
+
+.red {
+  color: red;
+}

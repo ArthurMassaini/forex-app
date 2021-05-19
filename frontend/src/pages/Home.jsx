@@ -9,7 +9,6 @@ import * as STORAGE from '../services/localStorage';
 import * as ACTIONS from '../redux/actions';
 
 function Home() {
-  // const [response, setResponse] = useState([]);
   const dispatch = useDispatch();
   const fluctuation = useSelector((state) => state.fluctuation.data);
 
@@ -32,12 +31,16 @@ function Home() {
   }
 
   return (
-    <main>
+    <main className="main-home">
       <NavBar item="DashBoard" />
-      {fluctuation
-        && fluctuation.map((values) => (
-          <Fluctuations key={values.datetime} values={values} />
-        ))}
+      <h1>GBP/USD</h1>
+      <p>(fluctuation updates every 1 minute)</p>
+      <section className="section">
+        {fluctuation
+          && fluctuation.map((values) => (
+            <Fluctuations key={values.datetime} values={values} />
+          ))}
+      </section>
     </main>
   );
 }
