@@ -6,13 +6,46 @@
   justify-content: center;
 }
 
-.link{
+.link {
   color: gray;
 }
 
-.link:hover{
+.link:hover {
   color: gray;
   text-decoration: underline;
   text-decoration-color: gray;
 }
 
+.center {
+  text-align: center;
+}
+
+.section {
+  margin-top: 50px;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+.main-home {
+  text-align: center;
+  /* display: flex;
+  flex-direction:column; */
+}
+
+.no-margin{
+  /* align-self: flex-start; */
+  margin-bottom: 0;
+}
+
+.green {
+  color: green;
+}
+
+.red {
+  color: red;
+}
+
+.input-trade {
+  margin-bottom: 10px;
+}
