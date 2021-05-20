@@ -17,7 +17,7 @@ const getAllUsers = async () => {
 
 const createUser = async (name, email, password) => {
   const user = await connection().then((db) =>
-    db.collection('users').insertOne({ name, email, password }),
+    db.collection('users').insertOne({ name, email, password, totalAmount: 50000 }),
   );
 
   return { id: user.insertedId, name, email };
