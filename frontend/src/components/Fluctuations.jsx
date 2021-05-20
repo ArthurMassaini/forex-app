@@ -76,7 +76,7 @@ function Fluctuations({ values }) {
     <div>
       <h3>
         {`Spread: ${
-          (Number(values.high) - Number(values.low)).toFixed(5) * 100000
+          Math.round((Number(values.high) - Number(values.low)) * 100000)
         }`}
       </h3>
       <Card.Group>
