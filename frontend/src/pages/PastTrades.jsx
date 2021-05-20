@@ -12,6 +12,11 @@ function PastTrades() {
   return (
     <main>
       <NavBar item="PastTrades" />
+
+      <h3 className="no-margin">
+        50000,00
+      </h3>
+      <p>Available to trade</p>
     </main>
   );
 }

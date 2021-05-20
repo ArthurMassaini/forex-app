@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Card, Button, Input } from 'semantic-ui-react';
 
+import * as API from '../services/api';
+
 function Fluctuations({ values }) {
   const [valuesSell, setValuesSell] = useState('');
   const [valuesBuy, setValuesBuy] = useState('');
@@ -10,6 +12,7 @@ function Fluctuations({ values }) {
   const [colorGreen, setColorGreen] = useState();
   const [colorRed, setColorRed] = useState();
   const [color, setColor] = useState();
+  const [input, setInput] = useState({ quantity: '' });
 
   useEffect(() => {
     setCompareSell(valuesSell);
@@ -72,12 +75,21 @@ function Fluctuations({ values }) {
     }
   };
 
+  const handleChange = ({ target }) => {
+    const { name, value } = target;
+    setInput({ ...input, [name]: value });
+  };
+
+  const handleTradeClick = async () => {
+    await API.fetchTrade(values);
+  };
+
   return (
     <div>
       <h3>
-        {`Spread: ${
-          Math.round((Number(values.high) - Number(values.low)) * 100000)
-        }`}
+        {`Spread: ${Math.round(
+          (Number(values.high) - Number(values.low)) * 100000,
+        )}`}
       </h3>
       <Card.Group>
         <Card>
@@ -98,9 +110,15 @@ function Fluctuations({ values }) {
         </Card>
       </Card.Group>
       <br />
-      <Input placeholder="Quantity" className="input-trade" />
+      <Input
+        placeholder="Quantity"
+        className="input-trade"
+        name="quantity"
+        value={input.quantity}
+        onChange={handleChange}
+      />
       <br />
-      <Button color={color} name={color}>
+      <Button color={color} name={color} onClick={handleTradeClick}>
         Place trade
       </Button>
     </div>

@@ -13,10 +13,10 @@ const returnFakeData = () => {
     },
     values: [
       {
-        datetime: '2021-05-19 10:03:00',
+        datetime: new Date().toLocaleString(),
         open: '1.41260',
-        high: randomNumber(1.40010, 1.40015), // 1.41000 1.42000
-        low: randomNumber(1.40000, 1.40005), // 1.38000  1.39000
+        high: randomNumber(1.40010, 1.40015), 
+        low: randomNumber(1.40000, 1.40005), 
         close: '1.41255',
       },
     ],

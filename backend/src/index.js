@@ -3,6 +3,7 @@ const cors = require('cors');
 
 const loginRoute = require('./routes/loginRoute');
 const usersRoute = require('./routes/usersRoute');
+const tradesRoute = require('./routes/tradesRoute');
 const socketCon = require('./socket/socketFake');
 // const socketCon = require('./socket/socketCon');
 
@@ -25,6 +26,7 @@ io.on('connection', socketCon.socketConnection);
 
 app.use(loginRoute);
 app.use(usersRoute);
+app.use(tradesRoute);
 app.use(errorMiddleware);
 
 const PORT = 3001;

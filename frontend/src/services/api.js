@@ -53,3 +53,25 @@ export async function fetchRegister(name, email, password) {
     return error.message;
   }
 }
+
+export async function fetchTrade(values) {
+  const endpoint = 'http://localhost:3001/trades';
+
+  const request = {
+    method: 'POST',
+    headers: {
+      'Content-type': 'application/json',
+      Authorization: STORAGE.getUser().token,
+    },
+    body: JSON.stringify(values),
+  };
+
+  try {
+    const response = await fetch(endpoint, request);
+    const responseJson = await response.json();
+
+    return responseJson;
+  } catch (error) {
+    return error.message;
+  }
+}
