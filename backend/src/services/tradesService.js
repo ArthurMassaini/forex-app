@@ -4,8 +4,8 @@ const tradesModel = require('../models/tradesModel');
 
 const INVALID_ENTRIES_MESSAGE = 'No entry can be undefined';
 
-const verifyEntries = (high, low, datetime, userId) => {
-  const entries = [high, low, datetime, userId];
+const verifyEntries = (high, low, datetime, userId, quantity, type) => {
+  const entries = [high, low, datetime, userId, quantity, type];
   const bool = entries.some((element) => element === undefined);
 
   if (bool) {
@@ -15,11 +15,11 @@ const verifyEntries = (high, low, datetime, userId) => {
 
 // ----------------------------------------- Services functions
 
-const createTrade = async (high, low, datetime, userId) => {
+const createTrade = async (high, low, datetime, userId, quantity, type) => {
   try {
-    verifyEntries(high, low, datetime, userId);
+    verifyEntries(high, low, datetime, userId, quantity, type);
 
-    const newTrade = await tradesModel.createTrade(high, low, datetime, userId);
+    const newTrade = await tradesModel.createTrade(high, low, datetime, userId, quantity, type);
     return newTrade;
   } catch (error) {
     return error.message;

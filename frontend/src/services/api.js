@@ -54,7 +54,7 @@ export async function fetchRegister(name, email, password) {
   }
 }
 
-export async function fetchTrade(values) {
+export async function fetchPostTrade(values) {
   const endpoint = 'http://localhost:3001/trades';
 
   const request = {
@@ -68,6 +68,19 @@ export async function fetchTrade(values) {
 
   try {
     const response = await fetch(endpoint, request);
+    const responseJson = await response.json();
+
+    return responseJson;
+  } catch (error) {
+    return error.message;
+  }
+}
+
+export async function fetchGetTrades(id) {
+  const endpoint = `http://localhost:3001/trades/${id}`;
+
+  try {
+    const response = await fetch(endpoint);
     const responseJson = await response.json();
 
     return responseJson;

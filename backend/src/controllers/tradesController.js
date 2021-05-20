@@ -8,9 +8,9 @@ const {
 } = require('./statusResponses');
 
 const createTrade = async (req, res) => {
-  const { high, low, datetime, userId } = req.body;
+  const { high, low, datetime, userId, quantity, type} = req.body;
 
-  const result = await tradesService.createTrade(high, low, datetime, userId);
+  const result = await tradesService.createTrade(high, low, datetime, userId, quantity, type);
 
   if (typeof result === 'string') {
     res.status(STATUS_BAD_REQUEST).json({ message: result });

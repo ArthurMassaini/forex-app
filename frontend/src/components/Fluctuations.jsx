@@ -1,67 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState } from 'react';
 import { Card, Button, Input } from 'semantic-ui-react';
 
-import * as API from '../services/api';
+import ExchangeValueSell from './fluctuationsValues/ExchangeValueSell';
+import ExchangeValueBuy from './fluctuationsValues/ExchangeValueBuy';
+import SpreadValue from './fluctuationsValues/SpreadValue';
+// import * as API from '../services/api';
 
-function Fluctuations({ values }) {
-  const [valuesSell, setValuesSell] = useState('');
-  const [valuesBuy, setValuesBuy] = useState('');
-  const [compareSell, setCompareSell] = useState('');
-  const [compareBuy, setCompareBuy] = useState('');
+function Fluctuations() {
   const [colorGreen, setColorGreen] = useState();
   const [colorRed, setColorRed] = useState();
   const [color, setColor] = useState();
   const [input, setInput] = useState({ quantity: '' });
-
-  useEffect(() => {
-    setCompareSell(valuesSell);
-    setCompareBuy(valuesBuy);
-    setValuesSell(values.low);
-    setValuesBuy(values.high);
-  }, [values]);
-
-  const verifyGreaterSell = (newValue) => {
-    if (Number(newValue) > Number(compareSell)) {
-      return (
-        <Card.Header>
-          <p className="green">
-            {newValue}
-            ↑
-          </p>
-        </Card.Header>
-      );
-    }
-    return (
-      <Card.Header>
-        <p className="red">
-          {newValue}
-          ↓
-        </p>
-      </Card.Header>
-    );
-  };
-
-  const verifyGreaterBuy = (newValue) => {
-    if (Number(newValue) > Number(compareBuy)) {
-      return (
-        <Card.Header>
-          <p className="green">
-            {newValue}
-            ↑
-          </p>
-        </Card.Header>
-      );
-    }
-    return (
-      <Card.Header>
-        <p className="red">
-          {newValue}
-          ↓
-        </p>
-      </Card.Header>
-    );
-  };
 
   const handleClick = ({ target }) => {
     const { name } = target;
@@ -81,27 +30,29 @@ function Fluctuations({ values }) {
   };
 
   const handleTradeClick = async () => {
-    await API.fetchTrade(values);
+    // await API.fetchPostTrade(values);
   };
 
   return (
     <div>
-      <h3>
-        {`Spread: ${Math.round(
-          (Number(values.high) - Number(values.low)) * 100000,
-        )}`}
-      </h3>
+      <SpreadValue />
+
       <Card.Group>
         <Card>
-          <Card.Content>{verifyGreaterSell(values.low)}</Card.Content>
+          <Card.Content>
+            <ExchangeValueSell />
+          </Card.Content>
           <Card.Content extra>
             <Button color={colorRed} onClick={handleClick} name="red">
               Sell
             </Button>
           </Card.Content>
         </Card>
+
         <Card>
-          <Card.Content>{verifyGreaterBuy(values.high)}</Card.Content>
+          <Card.Content>
+            <ExchangeValueBuy />
+          </Card.Content>
           <Card.Content extra>
             <Button color={colorGreen} onClick={handleClick} name="green">
               Buy
@@ -110,26 +61,22 @@ function Fluctuations({ values }) {
         </Card>
       </Card.Group>
       <br />
+
       <Input
         placeholder="Quantity"
+        type="number"
         className="input-trade"
         name="quantity"
         value={input.quantity}
         onChange={handleChange}
       />
       <br />
+
       <Button color={color} name={color} onClick={handleTradeClick}>
         Place trade
       </Button>
     </div>
   );
 }
-
-Fluctuations.propTypes = {
-  values: PropTypes.shape({
-    high: PropTypes.string,
-    low: PropTypes.string,
-  }).isRequired,
-};
 
 export default Fluctuations;

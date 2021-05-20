@@ -1,11 +1,11 @@
 const connection = require('../config/connection');
 
-const createTrade = async (high, low, datetime, userId) => {
+const createTrade = async (high, low, datetime, userId, quantity, type) => {
   const trade = await connection().then((db) =>
-    db.collection('trades').insertOne({ high, low, datetime, userId }),
+    db.collection('trades').insertOne({ high, low, datetime, userId, quantity, type, status: 'open' }),
   );
 
-  return { id: trade.insertedId, high, low, datetime, userId };
+  return { id: trade.insertedId, high, low, datetime, userId, quantity, type, status };
 };
 
 const getTradeByUserId = async (userId) => {
