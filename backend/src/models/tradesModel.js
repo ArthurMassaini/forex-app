@@ -5,7 +5,7 @@ const createTrade = async (high, low, datetime, userId, quantity, type) => {
     db.collection('trades').insertOne({ high, low, datetime, userId, quantity, type, status: 'open' }),
   );
 
-  return { id: trade.insertedId, high, low, datetime, userId, quantity, type, status };
+  return { id: trade.insertedId, high, low, datetime, userId, quantity, type, status: 'open' };
 };
 
 const getTradeByUserId = async (userId) => {

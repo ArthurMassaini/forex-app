@@ -1,16 +1,20 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Card, Button, Input } from 'semantic-ui-react';
 
 import ExchangeValueSell from './fluctuationsValues/ExchangeValueSell';
 import ExchangeValueBuy from './fluctuationsValues/ExchangeValueBuy';
 import SpreadValue from './fluctuationsValues/SpreadValue';
-// import * as API from '../services/api';
+import CustomMessage from './CustomMessage';
+import * as API from '../services/api';
 
 function Fluctuations() {
   const [colorGreen, setColorGreen] = useState();
   const [colorRed, setColorRed] = useState();
   const [color, setColor] = useState();
-  const [input, setInput] = useState({ quantity: '' });
+  const [input, setInput] = useState({ quantity: 0 });
+  const [message, setMessage] = useState('');
+  const values = useSelector((state) => state.fluctuation.data[0]);
 
   const handleClick = ({ target }) => {
     const { name } = target;
@@ -29,8 +33,14 @@ function Fluctuations() {
     setInput({ ...input, [name]: value });
   };
 
-  const handleTradeClick = async () => {
-    // await API.fetchPostTrade(values);
+  const handleTradeClick = async ({ target }) => {
+    const { name } = target;
+
+    if (typeof name === 'string') {
+      const type = name === 'red' ? 'sell' : 'buy';
+      const response = await API.fetchPostTrade(values, input.quantity, type);
+      setMessage(response.message);
+    }
   };
 
   return (
@@ -75,6 +85,7 @@ function Fluctuations() {
       <Button color={color} name={color} onClick={handleTradeClick}>
         Place trade
       </Button>
+      {message && <CustomMessage>{message}</CustomMessage>}
     </div>
   );
 }

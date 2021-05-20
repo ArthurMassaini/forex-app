@@ -54,8 +54,19 @@ export async function fetchRegister(name, email, password) {
   }
 }
 
-export async function fetchPostTrade(values) {
+export async function fetchPostTrade(values, quantity, type) {
   const endpoint = 'http://localhost:3001/trades';
+
+  const objectBody = {
+    high: values.high,
+    low: values.low,
+    datetime: values.datetime,
+    userId: STORAGE.getUser().id,
+    quantity,
+    type,
+  };
+
+  // console.log(objectBody);
 
   const request = {
     method: 'POST',
@@ -63,7 +74,7 @@ export async function fetchPostTrade(values) {
       'Content-type': 'application/json',
       Authorization: STORAGE.getUser().token,
     },
-    body: JSON.stringify(values),
+    body: JSON.stringify(objectBody),
   };
 
   try {
