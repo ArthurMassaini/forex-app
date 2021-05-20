@@ -66,8 +66,6 @@ export async function fetchPostTrade(values, quantity, type) {
     type,
   };
 
-  // console.log(objectBody);
-
   const request = {
     method: 'POST',
     headers: {
@@ -87,11 +85,20 @@ export async function fetchPostTrade(values, quantity, type) {
   }
 }
 
-export async function fetchGetTrades(id) {
+export async function fetchGetTrades() {
+  const { id } = STORAGE.getUser();
   const endpoint = `http://localhost:3001/trades/${id}`;
 
+  const request = {
+    method: 'GET',
+    headers: {
+      'Content-type': 'application/json',
+      Authorization: STORAGE.getUser().token,
+    },
+  };
+
   try {
-    const response = await fetch(endpoint);
+    const response = await fetch(endpoint, request);
     const responseJson = await response.json();
 
     return responseJson;
