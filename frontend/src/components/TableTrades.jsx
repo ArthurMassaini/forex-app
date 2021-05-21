@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import { Table, Icon, Button } from 'semantic-ui-react';
@@ -7,21 +7,16 @@ import * as API from '../services/api';
 import * as ACTIONS from '../redux/actions';
 
 function TableTrades({ trades }) {
-  const [getValues, setValues] = useState();
   const values = useSelector((state) => state.fluctuation.data[0]);
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    setValues(values);
-  }, []);
 
   const calculatePL = (type, high, low, quantity) => {
     let profitLoss;
     if (type === 'buy') {
-      profitLoss = getValues.high * quantity - quantity * high;
+      profitLoss = values.high * quantity - quantity * high;
       return profitLoss.toFixed(5);
     }
-    profitLoss = low * quantity - quantity * getValues.low;
+    profitLoss = low * quantity - quantity * values.low;
     return profitLoss.toFixed(5);
   };
 

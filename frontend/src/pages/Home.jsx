@@ -28,7 +28,7 @@ function Home() {
     <main className="main-home">
       <NavBar item="DashBoard" />
 
-      <h3 className="no-margin">{totalAmount}</h3>
+      {totalAmount && <h3 className="no-margin">{totalAmount.toFixed(2)}</h3>}
       <p>Available to trade</p>
 
       <h2 className="no-margin">GBP/USD</h2>
