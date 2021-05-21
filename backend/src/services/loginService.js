@@ -10,7 +10,10 @@ const FILLED_FIELDS_MESSAGE = 'All fields must be filled';
 const INCORRECT_DATA_MESSAGE = 'Incorrect username or password';
 
 const verifyEntries = (email, password, user) => {
-  const isMatch = bcrypt.compareSync(password, user.password);
+  let isMatch;
+  if (user && password) {
+    isMatch = bcrypt.compareSync(password, user.password);
+  }
 
   if (email === undefined || password === undefined) {
     throw new Error(FILLED_FIELDS_MESSAGE);

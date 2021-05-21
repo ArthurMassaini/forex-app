@@ -1,3 +1,5 @@
+const { ObjectId } = require('mongodb');
+
 const connection = require('../config/connection');
 
 const createTrade = async (high, low, datetime, userId, quantity, type) => {
@@ -15,4 +17,13 @@ const getTradeByUserId = async (userId) => {
   return trade;
 };
 
-module.exports = { createTrade, getTradeByUserId };
+const updateTradeStatus = async (id) => {
+  const updatedTrade = await connection().then((db) =>
+    db
+      .collection('trades')
+      .updateOne({ _id: ObjectId(id) }, { $set: { status: 'closed' } }),
+  );
+  return updatedTrade;
+};
+
+module.exports = { createTrade, getTradeByUserId, updateTradeStatus };

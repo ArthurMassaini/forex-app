@@ -1,8 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Table, Icon } from 'semantic-ui-react';
+import { Table, Icon, Button } from 'semantic-ui-react';
+
+import * as API from '../services/api';
 
 function TableTrades({ trades }) {
+  const handleClickStatus = async (id) => {
+    await API.fetchUpdateTradeStatus(id);
+  };
+
   return (
     <Table celled structured>
       <Table.Header>
@@ -14,6 +20,7 @@ function TableTrades({ trades }) {
             Opening Position(buy/sell)
           </Table.HeaderCell>
           <Table.HeaderCell rowSpan="2">Status</Table.HeaderCell>
+          <Table.HeaderCell rowSpan="2" />
         </Table.Row>
       </Table.Header>
 
@@ -29,9 +36,23 @@ function TableTrades({ trades }) {
                 {trade.type === 'buy' ? trade.high : trade.low}
               </Table.Cell>
               <Table.Cell>
-                <Icon color="green" name="checkmark" size="large" />
-                {/* <Icon color="red" name="x" size="large" /> */}
+                {trade.status === 'open' ? (
+                  <Icon color="green" name="checkmark" size="large" />
+                ) : (
+                  <Icon color="red" name="x" size="large" />
+                )}
                 {trade.status}
+              </Table.Cell>
+              <Table.Cell textAlign="center">
+                {trade.status !== 'closed' && (
+                  <Button
+                    basic
+                    color="red"
+                    onClick={() => handleClickStatus(id)}
+                  >
+                    Close Trade
+                  </Button>
+                )}
               </Table.Cell>
             </Table.Row>
           );

@@ -42,7 +42,7 @@ const createUser = async (name, email, password) => {
     verifyPassword(password);
 
     const salt = bcrypt.genSaltSync(10);
-		const encryptedPassword = bcrypt.hashSync(password, salt);
+    const encryptedPassword = bcrypt.hashSync(password, salt);
 
     const newUser = await usersModel.createUser(name, email, encryptedPassword);
     return newUser;
@@ -51,4 +51,12 @@ const createUser = async (name, email, password) => {
   }
 };
 
-module.exports = { createUser };
+const getUserById = async (id) => {
+  if (id === undefined) {
+    return 'Invalid Entry';
+  }
+  const user = await usersModel.getUserById(id);
+  return user;
+};
+
+module.exports = { createUser, getUserById };

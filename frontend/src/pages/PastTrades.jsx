@@ -11,7 +11,7 @@ function PastTrades() {
 
   useEffect(() => {
     API.fetchGetTrades().then((response) => getTrades(response));
-  }, []);
+  });
 
   if (STORAGE.getUser() === null) {
     return <Redirect to="/login" />;
