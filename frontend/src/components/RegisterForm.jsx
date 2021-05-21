@@ -4,7 +4,7 @@ import { Button, Form } from 'semantic-ui-react';
 
 import CustomMessage from './CustomMessage';
 
-import * as API from '../services/api';
+import * as API from '../utils/api';
 
 function RegisterForm() {
   const [formValues, setFormValues] = useState({

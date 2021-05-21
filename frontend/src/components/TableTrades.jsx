@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import { Table, Icon, Button } from 'semantic-ui-react';
 
-import * as API from '../services/api';
+import * as API from '../utils/api';
 import * as ACTIONS from '../redux/actions';
 
 function TableTrades({ trades }) {

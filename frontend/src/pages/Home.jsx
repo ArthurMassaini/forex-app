@@ -4,9 +4,9 @@ import { useDispatch } from 'react-redux';
 
 import NavBar from '../components/NavBar';
 import Fluctuations from '../components/Fluctuations';
-import * as STORAGE from '../services/localStorage';
+import * as STORAGE from '../utils/localStorage';
 import * as ACTIONS from '../redux/actions';
-import * as API from '../services/api';
+import * as API from '../utils/api';
 
 function Home() {
   const dispatch = useDispatch();
@@ -17,7 +17,7 @@ function Home() {
   }, []);
 
   useEffect(() => {
-    API.getuser().then((response) => setTotalAmount(response.user.totalAmount));
+    API.fetchGetUser().then((response) => setTotalAmount(response.user.totalAmount));
   }, []);
 
   if (STORAGE.getUser() === null) {

@@ -1,6 +1,6 @@
 import * as STORAGE from './localStorage';
 
-export async function getuser() {
+export async function fetchGetUser() {
   const { id } = STORAGE.getUser();
   const endpoint = `http://localhost:3001/users/${id}`;
   const response = await fetch(endpoint);

@@ -1,5 +1,5 @@
 import * as TYPES from '../types';
-import socketClient from '../../services/socketClient';
+import socketClient from '../../utils/socketClient';
 
 export const getData = (data) => ({
   type: TYPES.GET_CURRENCY_PAIR,
