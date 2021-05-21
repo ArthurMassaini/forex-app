@@ -13,3 +13,7 @@ export const retrieveData = () => async (dispatch) => {
   });
   //   dispatch({ type: OK });
 };
+
+export const flag = () => ({
+  type: TYPES.FLAG,
+});

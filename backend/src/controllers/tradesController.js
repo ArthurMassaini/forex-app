@@ -37,13 +37,14 @@ const getTradeByUserId = async (req, res) => {
 
 const updateTradeStatus = async (req, res) => {
   const { id } = req.params;
+  const { profritOrLoss, userId } = req.body;
 
-  const result = await tradesService.updateTradeStatus(id);
+  const result = await tradesService.updateTradeStatus(id, profritOrLoss, userId);
 
   if (typeof result === 'string') {
     res.status(STATUS_BAD_REQUEST).json({ message: result });
   } else {
-    res.status(STATUS_OK).json({ message: 'Status successfully updated ' });
+    res.status(STATUS_OK).json({ profritOrLoss, message: 'Status successfully updated' });
   }
 };
 

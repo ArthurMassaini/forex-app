@@ -116,7 +116,7 @@ export async function fetchGetTrades() {
   }
 }
 
-export async function fetchUpdateTradeStatus(id) {
+export async function fetchUpdateTradeStatus(id, profritOrLoss) {
   const endpoint = `http://localhost:3001/trades/${id}`;
 
   const request = {
@@ -125,6 +125,7 @@ export async function fetchUpdateTradeStatus(id) {
       'Content-type': 'application/json',
       Authorization: STORAGE.getUser().token,
     },
+    body: JSON.stringify({ profritOrLoss, userId: STORAGE.getUser().id }),
   };
 
   try {

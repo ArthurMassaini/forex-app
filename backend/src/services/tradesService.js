@@ -43,11 +43,11 @@ const getTradeByUserId = async (id) => {
   return trade;
 };
 
-const updateTradeStatus = async (id) => {
-  if (id === undefined) {
+const updateTradeStatus = async (id, profritOrLoss, userId) => {
+  if (id === undefined || profritOrLoss === undefined) {
     return 'Invalid Entry';
   }
-  const updatedTrade = await tradesModel.updateTradeStatus(id);
+  const updatedTrade = await tradesModel.updateTradeStatus(id, profritOrLoss, userId);
   return updatedTrade;
 };
 

@@ -1,12 +1,34 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import { useSelector, useDispatch } from 'react-redux';
 import { Table, Icon, Button } from 'semantic-ui-react';
 
 import * as API from '../services/api';
+import * as ACTIONS from '../redux/actions';
 
 function TableTrades({ trades }) {
-  const handleClickStatus = async (id) => {
-    await API.fetchUpdateTradeStatus(id);
+  const [getValues, setValues] = useState();
+  const values = useSelector((state) => state.fluctuation.data[0]);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    setValues(values);
+  }, []);
+
+  const calculatePL = (type, high, low, quantity) => {
+    let profitLoss;
+    if (type === 'buy') {
+      profitLoss = getValues.high * quantity - quantity * high;
+      return profitLoss.toFixed(5);
+    }
+    profitLoss = low * quantity - quantity * getValues.low;
+    return profitLoss.toFixed(5);
+  };
+
+  const handleClickStatus = async (id, type, high, low, quantity) => {
+    const profritOrLoss = calculatePL(type, high, low, quantity);
+    await API.fetchUpdateTradeStatus(id, profritOrLoss);
+    dispatch(ACTIONS.flag());
   };
 
   return (
@@ -20,6 +42,7 @@ function TableTrades({ trades }) {
             Opening Position(buy/sell)
           </Table.HeaderCell>
           <Table.HeaderCell rowSpan="2">Status</Table.HeaderCell>
+          <Table.HeaderCell rowSpan="2">Profit/Loss</Table.HeaderCell>
           <Table.HeaderCell rowSpan="2" />
         </Table.Row>
       </Table.Header>
@@ -43,12 +66,19 @@ function TableTrades({ trades }) {
                 )}
                 {trade.status}
               </Table.Cell>
+              <Table.Cell>{trade.profritOrLoss}</Table.Cell>
               <Table.Cell textAlign="center">
                 {trade.status !== 'closed' && (
                   <Button
                     basic
                     color="red"
-                    onClick={() => handleClickStatus(id)}
+                    onClick={() => handleClickStatus(
+                      id,
+                      trade.type,
+                      trade.high,
+                      trade.low,
+                      trade.quantity,
+                    )}
                   >
                     Close Trade
                   </Button>
@@ -63,7 +93,15 @@ function TableTrades({ trades }) {
 }
 
 TableTrades.propTypes = {
-  trades: PropTypes.arrayOf().isRequired,
+  trades: PropTypes.arrayOf(
+    PropTypes.shape({
+      high: PropTypes.string,
+      low: PropTypes.string,
+      datetime: PropTypes.string,
+      quantity: PropTypes.string,
+      type: PropTypes.string,
+    }),
+  ).isRequired,
 };
 
 export default TableTrades;
