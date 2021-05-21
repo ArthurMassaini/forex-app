@@ -6,7 +6,7 @@ import ExchangeValueSell from './fluctuationsValues/ExchangeValueSell';
 import ExchangeValueBuy from './fluctuationsValues/ExchangeValueBuy';
 import SpreadValue from './fluctuationsValues/SpreadValue';
 import CustomMessage from './CustomMessage';
-import * as API from '../services/api';
+import * as API from '../utils/api';
 
 function Fluctuations() {
   const [colorGreen, setColorGreen] = useState();

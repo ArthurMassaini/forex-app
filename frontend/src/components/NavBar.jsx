@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Menu } from 'semantic-ui-react';
 
-import * as STORAGE from '../services/localStorage';
+import * as STORAGE from '../utils/localStorage';
 
 function NavBar({ item }) {
   const [activeItem, setActiveItem] = useState(item);

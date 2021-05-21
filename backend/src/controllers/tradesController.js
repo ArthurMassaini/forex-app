@@ -7,6 +7,7 @@ const {
   STATUS_BAD_REQUEST,
 } = require('./statusResponses');
 
+// prettier-ignore
 const createTrade = async (req, res) => {
   const { high, low, datetime, userId, quantity, type} = req.body;
 
@@ -21,6 +22,7 @@ const createTrade = async (req, res) => {
   }
 };
 
+// prettier-ignore
 const getTradeByUserId = async (req, res) => {
   const { id } = req.params;
 
@@ -33,4 +35,17 @@ const getTradeByUserId = async (req, res) => {
   }
 };
 
-module.exports = { createTrade, getTradeByUserId };
+const updateTradeStatus = async (req, res) => {
+  const { id } = req.params;
+  const { profritOrLoss, userId } = req.body;
+
+  const result = await tradesService.updateTradeStatus(id, profritOrLoss, userId);
+
+  if (typeof result === 'string') {
+    res.status(STATUS_BAD_REQUEST).json({ message: result });
+  } else {
+    res.status(STATUS_OK).json({ profritOrLoss, message: 'Status successfully updated' });
+  }
+};
+
+module.exports = { createTrade, getTradeByUserId, updateTradeStatus };

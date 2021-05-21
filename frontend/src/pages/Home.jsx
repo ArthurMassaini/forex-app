@@ -1,17 +1,23 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
 import NavBar from '../components/NavBar';
 import Fluctuations from '../components/Fluctuations';
-import * as STORAGE from '../services/localStorage';
+import * as STORAGE from '../utils/localStorage';
 import * as ACTIONS from '../redux/actions';
+import * as API from '../utils/api';
 
 function Home() {
   const dispatch = useDispatch();
+  const [totalAmount, setTotalAmount] = useState('');
 
   useEffect(() => {
     dispatch(ACTIONS.retrieveData());
+  }, []);
+
+  useEffect(() => {
+    API.fetchGetUser().then((response) => setTotalAmount(response.user.totalAmount));
   }, []);
 
   if (STORAGE.getUser() === null) {
@@ -22,7 +28,7 @@ function Home() {
     <main className="main-home">
       <NavBar item="DashBoard" />
 
-      <h3 className="no-margin">50000,00</h3>
+      {totalAmount && <h3 className="no-margin">{totalAmount.toFixed(2)}</h3>}
       <p>Available to trade</p>
 
       <h2 className="no-margin">GBP/USD</h2>

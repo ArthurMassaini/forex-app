@@ -1,5 +1,14 @@
 import * as STORAGE from './localStorage';
 
+export async function fetchGetUser() {
+  const { id } = STORAGE.getUser();
+  const endpoint = `http://localhost:3001/users/${id}`;
+  const response = await fetch(endpoint);
+  const responseJson = await response.json();
+
+  return responseJson;
+}
+
 export async function fetchLogin(email, password) {
   const endpoint = 'http://localhost:3001/login';
 
@@ -95,6 +104,28 @@ export async function fetchGetTrades() {
       'Content-type': 'application/json',
       Authorization: STORAGE.getUser().token,
     },
+  };
+
+  try {
+    const response = await fetch(endpoint, request);
+    const responseJson = await response.json();
+
+    return responseJson;
+  } catch (error) {
+    return error.message;
+  }
+}
+
+export async function fetchUpdateTradeStatus(id, profritOrLoss) {
+  const endpoint = `http://localhost:3001/trades/${id}`;
+
+  const request = {
+    method: 'PUT',
+    headers: {
+      'Content-type': 'application/json',
+      Authorization: STORAGE.getUser().token,
+    },
+    body: JSON.stringify({ profritOrLoss, userId: STORAGE.getUser().id }),
   };
 
   try {

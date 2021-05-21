@@ -3,7 +3,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { Button, Form } from 'semantic-ui-react';
 
 import CustomMessage from './CustomMessage';
-import * as API from '../services/api';
+import * as API from '../utils/api';
 
 function LoginForm() {
   const [formValues, setFormValues] = useState({ email: '', password: '' });

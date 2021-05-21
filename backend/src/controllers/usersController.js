@@ -4,6 +4,7 @@ const {
   STATUS_CREATED,
   STATUS_CONFLICT,
   STATUS_BAD_REQUEST,
+  STATUS_OK
 } = require('./statusResponses');
 
 const createUser = async (req, res) => {
@@ -22,4 +23,14 @@ const createUser = async (req, res) => {
   }
 };
 
-module.exports = { createUser };
+const getUserById = async (req, res) => {
+  const { id } = req.params;
+  const result = await usersService.getUserById(id);
+
+  if (typeof result === 'string') {
+    res.status(STATUS_BAD_REQUEST).json({ message: result });
+  }
+  res.status(STATUS_OK).json({ user: result });
+};
+
+module.exports = { createUser, getUserById };

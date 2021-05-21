@@ -19,7 +19,14 @@ const createTrade = async (high, low, datetime, userId, quantity, type) => {
   try {
     verifyEntries(high, low, datetime, userId, quantity, type);
 
-    const newTrade = await tradesModel.createTrade(high, low, datetime, userId, quantity, type);
+    const newTrade = await tradesModel.createTrade(
+      high,
+      low,
+      datetime,
+      userId,
+      quantity,
+      type,
+    );
     return newTrade;
   } catch (error) {
     return error.message;
@@ -36,4 +43,12 @@ const getTradeByUserId = async (id) => {
   return trade;
 };
 
-module.exports = { createTrade, getTradeByUserId };
+const updateTradeStatus = async (id, profritOrLoss, userId) => {
+  if (id === undefined || profritOrLoss === undefined) {
+    return 'Invalid Entry';
+  }
+  const updatedTrade = await tradesModel.updateTradeStatus(id, profritOrLoss, userId);
+  return updatedTrade;
+};
+
+module.exports = { createTrade, getTradeByUserId, updateTradeStatus };

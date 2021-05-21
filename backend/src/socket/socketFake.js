@@ -25,7 +25,7 @@ const returnFakeData = () => {
 };
 
 const socketConnection = (socket) => {
-  console.log(`Usuário conectado! ${socket.id}`);
+  console.log(`User connnected! ${socket.id}`);
 
   const fakeValue = returnFakeData();
 
@@ -37,7 +37,7 @@ const socketConnection = (socket) => {
   }, 5000);
 
   socket.on('disconnect', () => {
-    console.log('Usuário desconectado');
+    console.log('User disconnnected!');
   });
 };
 
