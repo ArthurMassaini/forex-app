@@ -1,3 +1,5 @@
+const { ObjectId } = require('mongodb');
+
 const tradesModel = require('../models/tradesModel');
 
 // ----------------------------------------- Validate functions
@@ -34,9 +36,12 @@ const createTrade = async (high, low, datetime, userId, quantity, type) => {
 };
 
 const getTradeByUserId = async (id) => {
-  const trade = await tradesModel.getTradeByUserId(id);
+  if (!ObjectId.isValid(id)) {
+    return 'Invalid ID';
+  }
 
-  if (trade === null) {
+  const trade = await tradesModel.getTradeByUserId(id);
+  if (trade.length === 0) {
     return 'No past trades found';
   }
 
