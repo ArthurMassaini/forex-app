@@ -38,8 +38,8 @@ const createUser = async (name, email, password) => {
 
   try {
     verifyName(name);
-    verifyEmail(email, allUsers);
     verifyPassword(password);
+    verifyEmail(email, allUsers);
 
     const salt = bcrypt.genSaltSync(10);
     const encryptedPassword = bcrypt.hashSync(password, salt);
