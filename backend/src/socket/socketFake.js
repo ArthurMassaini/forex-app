@@ -34,7 +34,7 @@ const socketConnection = (socket) => {
   setInterval(() => {
     const fakeValue = returnFakeData();
     socket.emit('apiValues', fakeValue);
-  }, 5000);
+  }, 2000);
 
   socket.on('disconnect', () => {
     console.log('User disconnnected!');

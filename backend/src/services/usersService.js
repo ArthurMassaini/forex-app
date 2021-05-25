@@ -1,4 +1,5 @@
 const bcrypt = require('bcryptjs');
+const { ObjectId } = require('mongodb');
 
 const usersModel = require('../models/usersModel');
 
@@ -38,8 +39,8 @@ const createUser = async (name, email, password) => {
 
   try {
     verifyName(name);
-    verifyEmail(email, allUsers);
     verifyPassword(password);
+    verifyEmail(email, allUsers);
 
     const salt = bcrypt.genSaltSync(10);
     const encryptedPassword = bcrypt.hashSync(password, salt);
@@ -52,10 +53,13 @@ const createUser = async (name, email, password) => {
 };
 
 const getUserById = async (id) => {
-  if (id === undefined) {
-    return 'Invalid Entry';
+  if (!ObjectId.isValid(id)) {
+    return 'Invalid Params Entry';
   }
   const user = await usersModel.getUserById(id);
+  if (user === null) {
+    return 'User not found';
+  }
   return user;
 };
 

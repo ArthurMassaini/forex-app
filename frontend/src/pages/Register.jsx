@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom';
 import { Grid } from 'semantic-ui-react';
 
 import RegisterForm from '../components/RegisterForm';
-import * as STORAGE from '../services/localStorage';
+import * as STORAGE from '../utils/localStorage';
 
 function Register() {
   if (STORAGE.getUser() !== null) {

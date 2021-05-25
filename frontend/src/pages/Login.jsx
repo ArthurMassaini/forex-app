@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom';
 import { Grid } from 'semantic-ui-react';
 
 import LoginForm from '../components/LoginForm';
-import * as STORAGE from '../services/localStorage';
+import * as STORAGE from '../utils/localStorage';
 
 function Login() {
   if (STORAGE.getUser() !== null) {
